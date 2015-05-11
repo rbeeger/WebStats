@@ -29,6 +29,7 @@ As all the logic of the app and the widget is contained in their presenters and 
 ## Known issues
 * There is no error handling. When working with remote services you need to take into account that those may not be available or that internet access is for some reason currently not available. ReactiveCocoa provides the possibility to send errors. Those are neither faked in the service nor are the presenters prepared to handle them.
 * The app should refresh the statistics values for today periodically. Now they are only fetched when the app is started or you change between the daily and weekly displays.
+* The presenter of the today widget is in the WebStatsCommons framework because it's currently not possible to write tests for app extensions. The only way to do it is to move the code to be tested into a separate framework. I refrained from creating an additional framework for the today widget and put the presenter into the already existing commons framework to keep it simple.
 * This project should use [Carthage](https://github.com/Carthage/Carthage) to fetch and build all dependencies, but because of [Carthage #447](https://github.com/Carthage/Carthage/issues/447) this is currently not possible. So the binary releases provided by the frameworks are used.
 * The linker complains that it is not safe to use ReactiveCocoa in an app extension because ReactiveCocoa is not build with the needed restrictions to be considered safe by the linker (see [ReactiveCocoa #1990](https://github.com/ReactiveCocoa/ReactiveCocoa/issues/1990)) 
 
