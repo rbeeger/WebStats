@@ -82,29 +82,56 @@ class ViewController: UIViewController {
             })
 
         
-        let intervalHeader = ViewUtil.createHeaderLabelWithContext(.App)
-        presenter.intervalHeaderView.producer.start(next: {intervalHeader.text = $0})
+        let intervalHeader = ViewUtil.createLabelOfType(
+            .IntervalDisplay, inContext: .App, withSource: presenter.intervalHeaderView)
         intervalHeader.textAlignment = .Center
         view.addSubview(intervalHeader)
-
-        let statisticsContent = ViewUtil.createContentLabelWithContext(
-            .App, andContentSource: presenter.statisticsContentView)
-        view.addSubview(statisticsContent)
         
-        let topPagesHeader = ViewUtil.createHeaderLabelWithContext(.App)
-        topPagesHeader.text = presenter.topPagesHeader
+        let separator = UIView(frame: CGRectZero)
+        separator.backgroundColor = ViewUtil.separatorColor
+        view.addSubview(separator)
+
+        let pageViewsContent = ViewUtil.createLabelOfType(
+            .Content, inContext: .App, withSource: presenter.pageViewsContentView)
+        pageViewsContent.textAlignment = .Right
+        view.addSubview(pageViewsContent)
+        
+        let pageViewsLabel = ViewUtil.createLabelOfType(
+            .Content, inContext: .App, withSource: presenter.pageViewsLabel)
+        view.addSubview(pageViewsLabel)
+        
+        let visitsContent = ViewUtil.createLabelOfType(
+            .Content, inContext: .App, withSource: presenter.visitsContentView)
+        visitsContent.textAlignment = .Right
+        view.addSubview(visitsContent)
+        
+        let visitsLabel = ViewUtil.createLabelOfType(
+            .Content, inContext: .App, withSource: presenter.visitsLabel)
+        view.addSubview(visitsLabel)
+        
+        let bouncesContent = ViewUtil.createLabelOfType(
+            .Content, inContext: .App, withSource: presenter.bouncesContentView)
+        bouncesContent.textAlignment = .Right
+        view.addSubview(bouncesContent)
+        
+        let bouncesLabel = ViewUtil.createLabelOfType(
+            .Content, inContext: .App, withSource: presenter.bouncesLabel)
+        view.addSubview(bouncesLabel)
+        
+        let topPagesHeader = ViewUtil.createLabelOfType(
+            .Header, inContext: .App, withSource: presenter.topPagesHeader)
         view.addSubview(topPagesHeader)
         
-        let topPagesContent = ViewUtil.createContentLabelWithContext(
-            .App, andContentSource: presenter.topPagesContentView)
+        let topPagesContent = ViewUtil.createLabelOfType(
+            .Content, inContext: .App, withSource: presenter.topPagesContentView)
         view.addSubview(topPagesContent)
         
-        let topReferrersHeader = ViewUtil.createHeaderLabelWithContext(.App)
-        topReferrersHeader.text = presenter.topReferrers
+        let topReferrersHeader = ViewUtil.createLabelOfType(
+            .Header, inContext: .App, withSource: presenter.topReferrersHeader)
         view.addSubview(topReferrersHeader)
         
-        let topReferrersContent = ViewUtil.createContentLabelWithContext(
-            .App, andContentSource: presenter.topReferrersContentView)
+        let topReferrersContent = ViewUtil.createLabelOfType(
+            .Content, inContext: .App, withSource: presenter.topReferrersContentView)
         view.addSubview(topReferrersContent)
         
         let layout = Layout(parent: view)
@@ -112,15 +139,28 @@ class ViewController: UIViewController {
         layout.stretchHorizontally(intervalSelection, margin: 20)
         layout.put(chart, below: intervalSelection, separatorSpace: 10)
         layout.stretchHorizontally(chart, margin: 20)
-        layout.put(intervalHeader, below: chart, separatorSpace: 20)
+        layout.put(intervalHeader, below: chart, separatorSpace: 10)
         layout.stretchHorizontally(intervalHeader, margin: 20)
-        layout.put(statisticsContent, below: intervalHeader)
-        layout.stretchHorizontally(statisticsContent, margin: 30)
-        layout.put(topPagesHeader, below: statisticsContent, separatorSpace: 20)
+        layout.put(separator, below: intervalHeader, separatorSpace: 2)
+        layout.setHeight(separator, height: 3)
+        layout.stretchHorizontally(separator, margin: 20)
+        layout.put(pageViewsContent, below: separator, separatorSpace: 8)
+        layout.lineUp(sameHeight: true, sameWidth: false, streched: true, strechMargin: 20,
+            separatorSpace: 5, views: pageViewsLabel, pageViewsContent)
+        layout.setWidth(pageViewsLabel, width: 150)
+        layout.put(visitsContent, below: pageViewsContent, separatorSpace: 0)
+        layout.lineUp(sameHeight: true, sameWidth: false, streched: true, strechMargin: 20,
+            separatorSpace: 5, views: visitsLabel, visitsContent)
+        layout.setWidth(visitsLabel, width: 150)
+        layout.put(bouncesContent, below: visitsContent, separatorSpace: 0)
+        layout.lineUp(sameHeight: true, sameWidth: false, streched: true, strechMargin: 20,
+            separatorSpace: 5, views: bouncesLabel, bouncesContent)
+        layout.setWidth(bouncesLabel, width: 150)
+        layout.put(topPagesHeader, below: bouncesContent, separatorSpace: 8)
         layout.stretchHorizontally(topPagesHeader, margin: 20)
         layout.put(topPagesContent, below: topPagesHeader, separatorSpace: 2)
         layout.stretchHorizontally(topPagesContent, margin: 30)
-        layout.put(topReferrersHeader, below: topPagesContent, separatorSpace: 20)
+        layout.put(topReferrersHeader, below: topPagesContent, separatorSpace: 8)
         layout.stretchHorizontally(topReferrersHeader, margin: 20)
         layout.put(topReferrersContent, below: topReferrersHeader, separatorSpace: 2)
         layout.stretchHorizontally(topReferrersContent, margin: 30)

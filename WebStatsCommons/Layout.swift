@@ -73,12 +73,15 @@ public class Layout {
     
     
     
-    public func lineUp(sameHeight:Bool = true, sameWidth:Bool = false, separatorSpace:CGFloat = 8,
+    public func lineUp(sameHeight:Bool = true, sameWidth:Bool = false,
+        streched:Bool = false, strechMargin: CGFloat = 0, separatorSpace:CGFloat = 8,
         views:UIView...) {
-            lineUp(sameHeight: sameHeight, separatorSpace: separatorSpace, views: views)
+            lineUp(sameHeight: sameHeight, sameWidth: sameWidth, streched:streched, strechMargin: strechMargin,
+                separatorSpace: separatorSpace, views: views)
     }
     
-    public func lineUp(sameHeight:Bool = true, sameWidth:Bool = false, separatorSpace:CGFloat = 8,
+    public func lineUp(sameHeight:Bool = true, sameWidth:Bool = false,
+        streched:Bool = false, strechMargin: CGFloat = 0, separatorSpace:CGFloat = 8,
         views:[UIView]) {
             var lastView:UIView?
             for view in views {
@@ -115,6 +118,10 @@ public class Layout {
                     }
                 }
                 lastView = view
+            }
+            if let first = views.first, last = views.last where streched {
+                alignLeft(first, margin: strechMargin)
+                alignRight(last, margin: strechMargin)
             }
     }
     

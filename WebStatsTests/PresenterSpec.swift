@@ -49,9 +49,14 @@ class PresenterSpec: QuickSpec {
                 it("has a sufficient max bar value") {
                     expect(presenter.maxValueView.value) == 773
                 }
-                it("has the text summing up the statistics values of the shown days") {
-                    expect(presenter.statisticsContentView.value)
-                        == "Page Views: \t2821\nVisits: \t\t\t2814\nBounces: \t\t2807"
+                it("has the sum of the page views of the shown days") {
+                    expect(presenter.pageViewsContentView.value) == "2821"
+                }
+                it("has the sum of the visits of the shown days") {
+                    expect(presenter.visitsContentView.value) == "2814"
+                }
+                it("has the sum of the bounces of the shown days") {
+                    expect(presenter.bouncesContentView.value) == "2807"
                 }
             }
             context("after changing to the 7 weeks overview") {
@@ -77,9 +82,14 @@ class PresenterSpec: QuickSpec {
                 it("has a sufficient max bar value") {
                     expect(presenter.maxValueView.value) == 1873
                 }
-                it("has the text summing up the statistics values of the shown days") {
-                    expect(presenter.statisticsContentView.value)
-                        == "Page Views: \t9821\nVisits: \t\t\t9814\nBounces: \t\t9807"
+                it("has the sum of the page views of the shown weeks") {
+                    expect(presenter.pageViewsContentView.value) == "9821"
+                }
+                it("has the sum of the visits of the shown weeks") {
+                    expect(presenter.visitsContentView.value) == "9814"
+                }
+                it("has the sum of the bounces of the shown weeks") {
+                    expect(presenter.bouncesContentView.value) == "9807"
                 }
             }
             context("after selecting a chart bar") {
@@ -93,9 +103,14 @@ class PresenterSpec: QuickSpec {
                 it("has the top referrers for the time period of the selected bar") {
                     expect(presenter.topReferrersContentView.value) == "03-04 top referrer"
                 }
-                it("has the text listing the statistics value of the selected bar") {
-                    expect(presenter.statisticsContentView.value)
-                        == "Page Views: \t1203\nVisits: \t\t\t1202\nBounces: \t\t1201"
+                it("has the number of page views of the selected bar") {
+                    expect(presenter.pageViewsContentView.value) == "1203"
+                }
+                it("has the number of visits of the selected bar") {
+                    expect(presenter.visitsContentView.value) == "1202"
+                }
+                it("has the number of bounces of the selected bar") {
+                    expect(presenter.bouncesContentView.value) == "1201"
                 }
             }
         }

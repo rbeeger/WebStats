@@ -22,34 +22,45 @@ import Foundation
 import ReactiveCocoa
 
 public struct ViewUtil {
-    public enum Context: Int {
-        case App    = 0
-        case Widget = 1
+    public enum Context {
+        case App
+        case Widget
+    }
+    
+    public enum LabelType {
+        case IntervalDisplay
+        case Header
+        case Content
         
-        public var headerFont:UIFont {
-            return Context.headerFonts[self.rawValue]
+        public func fontInContext(context: Context) -> UIFont {
+            return LabelType.fonts[self]![context]!
         }
-        public var contentFont: UIFont {
-            return Context.contentFonts[self.rawValue]
-        }
-        
-        public var headerTextColor: UIColor {
-            return Context.headerTextColors[self.rawValue]
-        }
-        public var contentTextColor: UIColor {
-            return Context.contentTextColors[self.rawValue]
+        public func textColorInContext(context: Context) -> UIColor {
+            return LabelType.textColors[self]![context]!
         }
         
-        private static let headerFonts = [
-            UIFont.boldSystemFontOfSize(18), UIFont.boldSystemFontOfSize(14)]
-        private static let contentFonts = [
-            UIFont.boldSystemFontOfSize(16), UIFont.boldSystemFontOfSize(13)]
-        private static let contentTextColors = [
-            UIColor(red:0.211, green:0.223, blue:0.227, alpha:1),
-            UIColor(red:0.8, green:0.8, blue:0.8, alpha:1)]
-        private static let headerTextColors = [
-            UIColor(red:0, green:0.599, blue:0.932, alpha:1),
-            UIColor.whiteColor()]
+        private static let fonts = [
+            LabelType.IntervalDisplay: [
+                Context.App: UIFont.boldSystemFontOfSize(20),
+                Context.Widget: UIFont.boldSystemFontOfSize(16)],
+            LabelType.Header: [
+                Context.App: UIFont.boldSystemFontOfSize(18),
+                Context.Widget: UIFont.boldSystemFontOfSize(14)],
+            LabelType.Content: [
+                Context.App: UIFont.systemFontOfSize(16),
+                Context.Widget: UIFont.systemFontOfSize(13)]
+        ]
+        private static let textColors = [
+            LabelType.IntervalDisplay: [
+                Context.App: UIColor(red:0, green:0.538, blue:0.761, alpha:1),
+                Context.Widget: UIColor.whiteColor()],
+            LabelType.Header: [
+                Context.App: UIColor(red:0, green:0.599, blue:0.932, alpha:1),
+                Context.Widget: UIColor.whiteColor()],
+            LabelType.Content: [
+                Context.App: UIColor(red:0.211, green:0.223, blue:0.227, alpha:1),
+                Context.Widget: UIColor(red:0.8, green:0.8, blue:0.8, alpha:1)]
+        ]
     }
     
     public static let appBackgroundColor = UIColor.whiteColor()
@@ -66,26 +77,18 @@ public struct ViewUtil {
     
     public static let controlTintColor = UIColor(red:0, green:0.538, blue:0.761, alpha:1)
     
+    public static let separatorColor = UIColor(red:0, green:0.538, blue:0.761, alpha:1)
     
-    public static func createHeaderLabelWithContext(context: Context) -> UILabel {
+    
+    public static func createLabelOfType<T:PropertyType where T.Value == String>(
+        labelType:LabelType, inContext context:Context, withSource source:T) -> UILabel {
         let label = UILabel(frame: CGRectZero)
-        label.font = context.headerFont
-        label.textColor = context.headerTextColor
+        label.font = labelType.fontInContext(context)
+        label.textColor = labelType.textColorInContext(context)
         label.setContentCompressionResistancePriority(1000, forAxis: .Vertical)
         label.setContentHuggingPriority(1000, forAxis: .Vertical)
-        return label
-    }
-    
-    public static func createContentLabelWithContext(context: Context,
-        andContentSource contentSource:PropertyOf<String>) -> UILabel {
-            let label = UILabel(frame: CGRectZero)
-            label.font = context.contentFont
-            label.textColor = context.contentTextColor
             label.numberOfLines = 0
-            label.setContentCompressionResistancePriority(1000, forAxis: .Vertical)
-            label.setContentHuggingPriority(1000, forAxis: .Vertical)
-            contentSource.producer.start(next: {label.text = $0})
-            
-            return label
+        source.producer.start(next: {label.text = $0})
+        return label
     }
 }

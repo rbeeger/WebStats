@@ -29,11 +29,16 @@ public class Presenter {
             updateStatistics()
         }
     }
-    public let topPagesHeader = "Top Pages"
-    public let topReferrers = "Top Referrers"
+    public let topPagesHeader = ConstantProperty("Top Pages")
+    public let topReferrersHeader = ConstantProperty("Top Referrers")
+    public let pageViewsLabel = ConstantProperty("Page Views:")
+    public let visitsLabel = ConstantProperty("Visits:")
+    public let bouncesLabel = ConstantProperty("Bounces:")
     
     public let intervalHeaderView: PropertyOf<String>
-    public let statisticsContentView: PropertyOf<String>
+    public let pageViewsContentView: PropertyOf<String>
+    public let visitsContentView: PropertyOf<String>
+    public let bouncesContentView: PropertyOf<String>
     public let topPagesContentView: PropertyOf<String>
     public let topReferrersContentView: PropertyOf<String>
     public let barValueViews: [PropertyOf<[Int]>]
@@ -43,7 +48,9 @@ public class Presenter {
     private let statsService: StatsService
     private let dateUtil: DateUtil
     private let intervalHeader: MutableProperty<String>
-    private let statisticsContent: MutableProperty<String>
+    private let pageViewsContent: MutableProperty<String>
+    private let visitsContent: MutableProperty<String>
+    private let bouncesContent: MutableProperty<String>
     private let topPagesContent: MutableProperty<String>
     private let topReferrersContent: MutableProperty<String>
     private let barValues: [MutableProperty<[Int]>]
@@ -102,8 +109,12 @@ public class Presenter {
         intervalEndDate = MutableProperty(NSDate())
 
         selectedBarIndex = MutableProperty(nil)
-        statisticsContent = MutableProperty("")
-        statisticsContentView = PropertyOf(statisticsContent)
+        pageViewsContent = MutableProperty("")
+        visitsContent = MutableProperty("")
+        bouncesContent = MutableProperty("")
+        pageViewsContentView = PropertyOf(pageViewsContent)
+        visitsContentView = PropertyOf(visitsContent)
+        bouncesContentView = PropertyOf(bouncesContent)
         
         combineLatest(intervalStartDate.producer, intervalEndDate.producer).start(next: {
             startDate, endDate in
@@ -191,8 +202,8 @@ public class Presenter {
             bounces += values[2]
         }
         
-        statisticsContent.value = String(
-            format: "Page Views: \t%d\nVisits: \t\t\t%d\nBounces: \t\t%d",
-            pageViews , visits, bounces)
+        pageViewsContent.value = "\(pageViews)"
+        visitsContent.value = "\(visits)"
+        bouncesContent.value = "\(bounces)"
     }
 }

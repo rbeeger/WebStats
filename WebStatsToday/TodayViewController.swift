@@ -53,16 +53,16 @@ class TodayViewController: UIViewController, NCWidgetProviding {
             interactive:false)
         view.addSubview(chart)
         
-        let statisticsContent = ViewUtil.createContentLabelWithContext(
-            .Widget, andContentSource: presenter.statisticsContentView)
+        let statisticsContent = ViewUtil.createLabelOfType(
+            .Content, inContext: .Widget, withSource: presenter.statisticsContentView)
         view.addSubview(statisticsContent)
         
-        let topPagesHeader = ViewUtil.createHeaderLabelWithContext(.Widget)
-        topPagesHeader.text = presenter.topPagesHeader
+        let topPagesHeader = ViewUtil.createLabelOfType(
+            .Header, inContext: .Widget, withSource: presenter.topPagesHeader)
         view.addSubview(topPagesHeader)
         
-        let topPagesContent = ViewUtil.createContentLabelWithContext(
-            .Widget, andContentSource: presenter.topPagesContentView)
+        let topPagesContent = ViewUtil.createLabelOfType(
+            .Content, inContext: .Widget, withSource: presenter.topPagesContentView)
         view.addSubview(topPagesContent)
         
         let layout = Layout(parent: view)
@@ -72,9 +72,9 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         layout.setHeight(chart, height: 30)
         layout.put(statisticsContent, below: chart, separatorSpace: 4)
         layout.stretchHorizontally(statisticsContent)
-        layout.put(topPagesHeader, below: statisticsContent, separatorSpace: 10)
+        layout.put(topPagesHeader, below: statisticsContent, separatorSpace: 8)
         layout.stretchHorizontally(topPagesHeader)
-        layout.put(topPagesContent, below: topPagesHeader, separatorSpace: 4)
+        layout.put(topPagesContent, below: topPagesHeader, separatorSpace: 2)
         layout.stretchHorizontally(topPagesContent, margin: 10)
         
         preferredContentSize = CGSize(width: 0, height: 140)

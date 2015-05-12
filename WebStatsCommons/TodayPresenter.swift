@@ -23,7 +23,7 @@ import ReactiveCocoa
 
 public class TodayPresenter {
     
-    public let topPagesHeader = "Top Pages"
+    public let topPagesHeader = ConstantProperty("Top Pages")
 
     
     public let statisticsContentView: PropertyOf<String>
