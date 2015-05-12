@@ -58,10 +58,14 @@ public class Chart: UIView {
             }
             
             if interactive {
-                let recognizer = UITapGestureRecognizer(target: self, action: "tapped:")
-                recognizer.numberOfTapsRequired = 1
-                recognizer.numberOfTouchesRequired = 1
-                addGestureRecognizer(recognizer)
+                let tapRecognizer = UITapGestureRecognizer(target: self, action: "tapped:")
+                tapRecognizer.numberOfTapsRequired = 1
+                tapRecognizer.numberOfTouchesRequired = 1
+                addGestureRecognizer(tapRecognizer)
+                let panRecognizer = UIPanGestureRecognizer(target: self, action: "panned:")
+                panRecognizer.minimumNumberOfTouches = 1
+                panRecognizer.maximumNumberOfTouches = 1
+                addGestureRecognizer(panRecognizer)
             }
     }
     
@@ -73,7 +77,23 @@ public class Chart: UIView {
         let location = recognizer.locationInView(self)
         for bar in bars {
             if bar.frame.contains(location) {
-                selectedBar.value = bar
+                if selectedBar.value === bar {
+                    selectedBar.value = nil
+                } else {
+                    selectedBar.value = bar
+                }
+                break
+            }
+        }
+    }
+    
+    func panned(recognizer:UITapGestureRecognizer) {
+        let location = recognizer.locationInView(self)
+        for bar in bars {
+            if bar.frame.contains(location) {
+                if selectedBar.value !== bar {
+                    selectedBar.value = bar
+                }
                 break
             }
         }
