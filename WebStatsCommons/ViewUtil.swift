@@ -67,7 +67,7 @@ public struct ViewUtil {
     public static let widgetBackgroundColor = UIColor.clearColor()
     
     public static let oddContainerColor = UIColor(red:0.568, green:0.626, blue:0.645, alpha:1)
-    public static let evenContainerColor = UIColor(red:0.383, green:0.458, blue:0.484, alpha:1)
+    public static let evenContainerColor = UIColor(red:0.483, green:0.558, blue:0.584, alpha:1)
     
     public static let pageViewsColor = UIColor(red:0.5, green:0.782, blue:0.877, alpha:1)
     public static let visitsColor = UIColor(red:0.128, green:0.436, blue:0.539, alpha:1)
