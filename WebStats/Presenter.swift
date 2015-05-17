@@ -117,14 +117,15 @@ public class Presenter {
         bouncesContentView = PropertyOf(bouncesContent)
         
         combineLatest(intervalStartDate.producer, intervalEndDate.producer).start(next: {
-            startDate, endDate in
-            self.updateIntervalHeaderForIntervalFrom(startDate, to: endDate)
-            self.updateTopsForIntervalFrom(startDate, to: endDate)
+            [weak self] startDate, endDate in
+            self?.updateIntervalHeaderForIntervalFrom(startDate, to: endDate)
+            self?.updateTopsForIntervalFrom(startDate, to: endDate)
         })
         
         selectedBarIndex.producer.start(next: {
-            self.updateIntervalDatesWithSelectedBar($0)
-            self.updateStatisticsContentWithSelectedBar($0)
+            [weak self] in
+            self?.updateIntervalDatesWithSelectedBar($0)
+            self?.updateStatisticsContentWithSelectedBar($0)
         })
         
         updateStatistics()
